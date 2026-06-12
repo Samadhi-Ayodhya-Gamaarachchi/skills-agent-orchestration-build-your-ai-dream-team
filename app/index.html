@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project Pulse</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero__content dashboard">
+      <p class="eyebrow">Project overview</p>
+      <h1>Project Pulse</h1>
+      <p class="hero__lede">Track the status, priority, and latest movement across the team’s active work.</p>
+    </div>
+  </header>
+
+  <main class="dashboard" id="dashboard">
+    <section aria-labelledby="projects-heading" class="projects-section">
+      <div class="section-heading">
+        <h2 id="projects-heading">Active projects</h2>
+        <p>Fresh updates, clear ownership, and priorities at a glance.</p>
+      </div>
+      <div class="project-grid" id="project-grid" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <script type="module">
+    const grid = document.querySelector('#project-grid');
+
+    const statusLabel = (status) => status;
+    const priorityLabel = (priority) => priority;
+
+    const createProjectCard = (project) => {
+      const card = document.createElement('article');
+      card.className = 'project-card';
+      card.tabIndex = 0;
+      card.dataset.status = project.status.toLowerCase().replace(/\s+/g, '-');
+      card.dataset.priority = project.priority.toLowerCase().replace(/\s+/g, '-');
+
+      card.innerHTML = `
+        <div class="project-card__header">
+          <div>
+            <h3>${project.name}</h3>
+            <p class="project-card__owner">Owner: ${project.owner}</p>
+          </div>
+          <div class="badge-group" aria-label="Project labels">
+            <span class="badge badge--status">${statusLabel(project.status)}</span>
+            <span class="badge badge--priority">${priorityLabel(project.priority)}</span>
+          </div>
+        </div>
+        <dl class="project-card__details">
+          <div>
+            <dt>Status</dt>
+            <dd>${project.status}</dd>
+          </div>
+          <div>
+            <dt>Recent activity</dt>
+            <dd>${project.recentActivity}</dd>
+          </div>
+          <div>
+            <dt>Priority</dt>
+            <dd>${project.priority}</dd>
+          </div>
+        </dl>
+      `;
+
+      return card;
+    };
+
+    async function renderDashboard() {
+      try {
+        const response = await fetch('./project-data.json');
+        if (!response.ok) {
+          throw new Error(`Unable to load project data (${response.status})`);
+        }
+
+        const data = await response.json();
+        const projects = Array.isArray(data.projects) ? data.projects : [];
+
+        if (projects.length === 0) {
+          grid.innerHTML = '<p class="empty-state">No projects available.</p>';
+          return;
+        }
+
+        grid.replaceChildren(...projects.map(createProjectCard));
+      } catch (error) {
+        grid.innerHTML = `<p class="empty-state">Project data could not be loaded.</p>`;
+        console.error(error);
+      }
+    }
+
+    renderDashboard();
+  </script>
+</body>
+</html>

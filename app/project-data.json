@@ -1,0 +1,46 @@
+{
+  "projects": [
+    {
+      "name": "Launch Pad",
+      "owner": "Ava Chen",
+      "status": "On Track",
+      "recentActivity": "Finalized onboarding flow and published QA notes 2 hours ago.",
+      "priority": "High"
+    },
+    {
+      "name": "Insight Stream",
+      "owner": "Mateo Silva",
+      "status": "At Risk",
+      "recentActivity": "Blocked by API schema review; follow-up scheduled for today.",
+      "priority": "High"
+    },
+    {
+      "name": "Team Atlas",
+      "owner": "Nina Patel",
+      "status": "On Track",
+      "recentActivity": "Shipped dashboard metrics refresh and checked in design polish.",
+      "priority": "Medium"
+    },
+    {
+      "name": "Signal Hub",
+      "owner": "Jordan Kim",
+      "status": "Needs Attention",
+      "recentActivity": "Updated release checklist and flagged a dependency delay.",
+      "priority": "Medium"
+    },
+    {
+      "name": "Pulse Mobile",
+      "owner": "Lena Brooks",
+      "status": "On Track",
+      "recentActivity": "Completed accessibility pass and verified responsive layouts.",
+      "priority": "Low"
+    },
+    {
+      "name": "Ops Compass",
+      "owner": "Ravi Singh",
+      "status": "Blocked",
+      "recentActivity": "Waiting on infrastructure approval before deployment can resume.",
+      "priority": "High"
+    }
+  ]
+}
